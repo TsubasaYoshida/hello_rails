@@ -58,3 +58,5 @@ group :development do
   gem 'hirb'
   gem 'hirb-unicode'
 end
+
+gem 'haml-rails'
