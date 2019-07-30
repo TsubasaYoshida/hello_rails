@@ -22,7 +22,7 @@
       %td
         = link_to 'Edit', edit_blog_entry_path(blog, entry)
       %td
-        = link_to 'Destroy', blog_entry_path(entry), method: :delete, data: {confirm: 'Are you sure?'}
+        = link_to 'Destroy', blog_entry_path(blog, entry), method: :delete, data: {confirm: 'Are you sure?'}
 
 %br
 
