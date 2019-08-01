@@ -20,6 +20,7 @@ class EntriesController < ApplicationController
 
   # GET /entries/1/edit
   def edit
+    @blog = Blog.find(params[:blog_id])
   end
 
   # POST /entries
