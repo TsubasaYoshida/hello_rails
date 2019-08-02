@@ -10,6 +10,10 @@ class EntriesController < ApplicationController
   # GET /entries/1
   # GET /entries/1.json
   def show
+    if @entry.blog_id == params[:blog_id].to_i
+      @blog = Blog.find(params[:blog_id])
+    end
+    @comment = Comment.new
   end
 
   # GET /entries/new
