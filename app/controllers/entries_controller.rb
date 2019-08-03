@@ -1,14 +1,7 @@
 class EntriesController < ApplicationController
   before_action :set_entry, only: [:show, :edit, :update, :destroy]
+  before_action :set_blog, only: [:new, :edit, :create, :update, :destroy]
 
-  # GET /entries
-  # GET /entries.json
-  def index
-    @entries = Entry.all
-  end
-
-  # GET /entries/1
-  # GET /entries/1.json
   def show
     if @entry.blog_id == params[:blog_id].to_i
       @blog = Blog.find(params[:blog_id])
@@ -16,66 +9,49 @@ class EntriesController < ApplicationController
     @comment = Comment.new
   end
 
-  # GET /entries/new
   def new
-    @blog = Blog.find(params[:blog_id])
     @entry = Entry.new
   end
 
-  # GET /entries/1/edit
   def edit
-    @blog = Blog.find(params[:blog_id])
   end
 
-  # POST /entries
-  # POST /entries.json
   def create
     @entry = Entry.new(entry_params)
+    @entry.assign_attributes(blog_id: @blog.id)
 
-    respond_to do |format|
-      if @entry.save
-        format.html {redirect_to @entry, notice: 'Entry was successfully created.'}
-        format.json {render :show, status: :created, location: @entry}
-      else
-        format.html {render :new}
-        format.json {render json: @entry.errors, status: :unprocessable_entity}
-      end
+    if @entry.save
+      redirect_to blog_entry_url(@blog, @entry)
+    else
+      render :new
     end
   end
 
-  # PATCH/PUT /entries/1
-  # PATCH/PUT /entries/1.json
   def update
-    respond_to do |format|
-      if @entry.update(entry_params)
-        format.html {redirect_to @entry, notice: 'Entry was successfully updated.'}
-        format.json {render :show, status: :ok, location: @entry}
-      else
-        format.html {render :edit}
-        format.json {render json: @entry.errors, status: :unprocessable_entity}
-      end
+    if @entry.update(entry_params)
+      redirect_to blog_entry_url(@blog, @entry)
+    else
+      render :edit
     end
   end
 
-  # DELETE /entries/1
-  # DELETE /entries/1.json
   def destroy
     @entry.destroy
-    respond_to do |format|
-      format.html {redirect_to entries_url, notice: 'Entry was successfully destroyed.'}
-      format.json {head :no_content}
-    end
+    redirect_to blog_url(@blog)
   end
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_entry
     @entry = Entry.find(params[:id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
+  def set_blog
+    @blog = Blog.find(params[:blog_id])
+  end
+
   def entry_params
     params.require(:entry).permit(:title, :body)
   end
+
 end
