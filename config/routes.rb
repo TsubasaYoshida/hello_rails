@@ -2,5 +2,7 @@ Rails.application.routes.draw do
   resources :blogs do
     resources :entries
   end
-  resources :comments
+  resources :comments do
+    patch :approve, on: :member
+  end
 end

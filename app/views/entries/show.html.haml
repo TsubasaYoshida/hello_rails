@@ -30,7 +30,8 @@
         %td
           = comment.status == "approved" ? comment.body : "(承認待ち)"
         %td
-          = link_to 'Approve' if comment.status == "unapproved"
+          - if comment.status == "unapproved"
+            = link_to 'Approve', approve_comment_path(comment), method: :patch
         %td
           = link_to 'Destroy', comment_path(comment), method: :delete, data: { confirm: 'Are you sure?' }
 
