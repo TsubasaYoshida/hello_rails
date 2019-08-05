@@ -21,10 +21,6 @@ class CommentsController < ApplicationController
 
   private
 
-  def set_comment
-    @comment = Comment.find(params[:id])
-  end
-
   def set_blog_entry
     @blog = Blog.find(params[:blog_id])
     @entry = @blog.entries.find(params[:entry_id])
