@@ -1,13 +1,11 @@
 class CommentsController < ApplicationController
-  before_action :set_comment, only: [:approve, :destroy]
   before_action :set_blog_entry, only: [:create, :approve, :destroy]
+  before_action :set_comment, only: [:approve, :destroy]
 
   def create
     @comment = Comment.new(comment_params)
     @comment.assign_attributes(entry_id: @entry.id, status: "unapproved")
-    if @entry.blog_id == @blog.id
-      @comment.save
-    end
+    @comment.save
     redirect_to blog_entry_url(@blog, @entry)
   end
 
@@ -29,7 +27,7 @@ class CommentsController < ApplicationController
 
   def set_blog_entry
     @blog = Blog.find(params[:blog_id])
-    @entry = Entry.find(params[:entry_id])
+    @entry = @blog.entries.find(params[:entry_id])
   end
 
   def comment_params

@@ -17,13 +17,11 @@ class BlogsController < ApplicationController
 
   def create
     @blog = Blog.new(blog_params)
-
     if @blog.save
       redirect_to @blog
     else
       render :new
     end
-
   end
 
   def update
@@ -32,7 +30,6 @@ class BlogsController < ApplicationController
     else
       render :edit
     end
-
   end
 
   def destroy

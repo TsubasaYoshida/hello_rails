@@ -1,11 +1,8 @@
 class EntriesController < ApplicationController
-  before_action :set_entry, only: [:show, :edit, :update, :destroy]
-  before_action :set_blog, only: [:new, :edit, :create, :update, :destroy]
+  before_action :set_blog_entry, only: [:show, :edit, :update, :destroy]
+  before_action :set_blog, only: [:new, :create]
 
   def show
-    if @entry.blog_id == params[:blog_id].to_i
-      @blog = Blog.find(params[:blog_id])
-    end
     @comment = Comment.new
   end
 
@@ -19,7 +16,6 @@ class EntriesController < ApplicationController
   def create
     @entry = Entry.new(entry_params)
     @entry.assign_attributes(blog_id: @blog.id)
-
     if @entry.save
       redirect_to blog_entry_url(@blog, @entry)
     else
@@ -42,8 +38,9 @@ class EntriesController < ApplicationController
 
   private
 
-  def set_entry
-    @entry = Entry.find(params[:id])
+  def set_blog_entry
+    @blog = Blog.find(params[:blog_id])
+    @entry = @blog.entries.find(params[:id])
   end
 
   def set_blog
