@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
-  before_action :set_blog_entry, only: [:create, :approve, :destroy]
-  before_action :set_comment, only: [:approve, :destroy]
+  before_action :set_blog_entry, only: :create
+  before_action :set_blog_entry_comment, only: [:approve, :destroy]
 
   def create
     @comment = Comment.new(comment_params)
@@ -28,6 +28,12 @@ class CommentsController < ApplicationController
   def set_blog_entry
     @blog = Blog.find(params[:blog_id])
     @entry = @blog.entries.find(params[:entry_id])
+  end
+
+  def set_blog_entry_comment
+    @blog = Blog.find(params[:blog_id])
+    @entry = @blog.entries.find(params[:entry_id])
+    @comment = @entry.comments.find(params[:id])
   end
 
   def comment_params
