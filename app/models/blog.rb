@@ -1,6 +1,8 @@
 class Blog < ApplicationRecord
   has_many :entries
 
+  validates :title, presence: true
+
   def self.blog_have_no_entry
     blog_list = []
     Blog.all.each do |blog|
