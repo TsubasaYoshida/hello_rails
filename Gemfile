@@ -57,6 +57,8 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 group :development do
   gem 'hirb'
   gem 'hirb-unicode'
+
+  gem 'spring-commands-rspec'
 end
 
 gem 'haml-rails'
