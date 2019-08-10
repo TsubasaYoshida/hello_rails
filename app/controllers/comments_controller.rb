@@ -6,6 +6,9 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params)
     @comment.assign_attributes(entry_id: @entry.id, status: "unapproved")
     @comment.save
+
+    NoticeMailer.sendmail_confirm(@blog, @entry, @comment).deliver
+
     redirect_to blog_entry_url(@blog, @entry)
   end
 
