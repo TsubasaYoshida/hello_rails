@@ -1,12 +1,11 @@
 class BlogsController < ApplicationController
-  before_action :set_blog, only: [:edit, :update, :destroy]
+  before_action :set_blog, only: [:show, :edit, :update, :destroy]
 
   def index
     @blogs = Blog.all
   end
 
   def show
-    @blog = Blog.where("id = #{params[:id]}").first
   end
 
   def new
