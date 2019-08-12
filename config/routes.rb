@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
-  devise_for :users
+  get 'home/index'
+  devise_for :users, :path => "auth", controllers: {
+      # Extends Devise registrations
+      sessions: "custom/devise/sessions",
+      registrations: "custom/devise/registrations",
+      confirmations: "custom/devise/confirmations",
+      omniauth_callbacks: "custom/devise/omniauth_callbacks"
+  }
   resources :blogs do
     resources :entries, except: [:index] do
       resources :comments, only: [:create, :destroy] do
