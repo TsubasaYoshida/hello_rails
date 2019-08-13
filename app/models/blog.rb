@@ -1,4 +1,7 @@
 class Blog < ApplicationRecord
+  extend Enumerize
+  enumerize :scope, in: %w(public private)
+
   has_many :entries
 
   validates :title, presence: true

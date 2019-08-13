@@ -1,5 +1,6 @@
 = simple_form_for @blog do |f|
   = f.input :title, label: "タイトル", hint: "ブログのタイトルを入力してください"
+  = f.input :scope
   = f.button :submit
 
   -# 以下simple_formのinputカスタマイズ実験用
