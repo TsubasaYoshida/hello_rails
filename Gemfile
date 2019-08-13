@@ -18,6 +18,7 @@ gem 'simple_form'
 gem 'devise'
 gem 'omniauth-oauth2'
 gem 'omniauth-google-oauth2'
+gem 'enumerize'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
