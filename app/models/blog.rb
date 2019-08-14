@@ -2,6 +2,8 @@ class Blog < ApplicationRecord
   extend Enumerize
   enumerize :scope, in: %w(public private)
 
+  mount_uploader :image, ImageUploader
+
   has_many :entries
 
   validates :title, presence: true
