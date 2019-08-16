@@ -1,41 +1,35 @@
 class ImageUploader < CarrierWave::Uploader::Base
-
   include CarrierWave::RMagick
 
+  # サーバ内(ローカル)に保存する
   storage :file
 
+  # 保存する際の拡張子
+  process :convert => 'jpg'
+
+  # Rails.root/public/uploads/...に保存する
   def store_dir
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
 
-  # ファイルサイズに制限をつける
-  def size_range
-    1..5.megabytes
+  # 保存する際のファイル名の規則
+  def filename
+    "#{secure_token}.#{file.extension}" if original_filename.present?
   end
 
-  # 画像の上限を640x480にする
-  process :resize_to_limit => [640, 640]
-
-  # サムネイル保存する
+  # サムネイル用サイズ
   version :thumb do
     process :resize_to_limit => [320, 320]
   end
 
-  # 保存形式
-  process :convert => 'jpg'
+  # ファイルサイズをバリデーションする
+  def size_range
+    1..5.megabytes
+  end
 
+  # 許可する拡張子
   def extension_whitelist
     %w(jpg jpeg gif png)
-  end
-
-  # 拡張子が同じでないとGIFをJPGとかにコンバートできない
-  def filename
-    super.chomp(File.extname(super)) + '.jpg' if original_filename.present?
-  end
-
-  # ファイル名を日付にすると不具合が出る
-  def filename
-    "#{secure_token}.#{file.extension}" if original_filename.present?
   end
 
   protected
