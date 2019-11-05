@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   get 'home/index'
-  devise_for :users, :path => "auth", controllers: {
+  devise_for :users, controllers: {
       # Extends Devise registrations
       sessions: "custom/devise/sessions",
       registrations: "custom/devise/registrations",
