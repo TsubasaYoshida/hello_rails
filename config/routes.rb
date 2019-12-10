@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get 'home/index'
+  get 'home/cognito'
   devise_for :users, controllers: {
       # Extends Devise registrations
       sessions: "custom/devise/sessions",
