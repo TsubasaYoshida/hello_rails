@@ -1,6 +1,3 @@
-require "net/http"
-require "json"
-
 class HomeController < ApplicationController
   def index
   end
@@ -18,9 +15,11 @@ class HomeController < ApplicationController
         redirect_uri: "http://localhost:3000/home/cognito",
         code: @code
     }
-    headers = {"Content-Type" => "application/x-www-form-urlencoded"}
 
-    response = http.post(uri.path, params.to_json, headers)
+    req = Net::HTTP::Post.new(uri.path)
+    req.set_form_data(params)
+
+    response = http.request(req)
 
     @status_code = response.code
     @response_body = response.body
