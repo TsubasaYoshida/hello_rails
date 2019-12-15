@@ -30,5 +30,14 @@ class HomeController < ApplicationController
     id_token_array = id_token.split(".")
     decoded_payload = Base64.decode64(id_token_array[1])
     @email = JSON.parse(decoded_payload)["email"]
+
+    @user = User.find_for_cognito(@email)
+    if @user.persisted?
+      reset_session
+      session[:user_id] = @user.id
+      sign_in_and_redirect @user
+    else
+      redirect_to home_index_url
+    end
   end
 end

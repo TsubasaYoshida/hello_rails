@@ -22,4 +22,16 @@ class User < ApplicationRecord
     user
   end
 
+  def self.find_for_cognito(email)
+    user = User.where(email: email).first
+
+    unless user
+      user = User.create(email: email,
+                          password: Devise.friendly_token[0, 20],
+                          confirmed_at: Time.zone.now
+      )
+    end
+    user
+  end
+
 end
